@@ -4,7 +4,7 @@ _the bare minimum minishell project_
 ## 1. Syntax
 When _minish_ reads its input, it divides the input into words and operators, employing the quoting rules to select which meanings to assign various words and characters.
 
-Minish then parses these tokens into [commands](#2-commands) and other constructs, <u>removes</u> the special meaning of certain words or characters, [expands](#4-expansion-and-quote-removal) others, [redirects](#5-redirections) input and output as needed, [executes](#6-executing-commands) the specified command, <u>waits</u> for the command’s exit status, and makes that exit status <u>available</u> for further inspection or processing.
+Minish then parses these tokens into [commands](#2-commands) and other constructs, **removes** the special meaning of certain words or characters, [expands](#4-expansion-and-quote-removal) others, [redirects](#5-redirections) input and output as needed, [executes](#6-executing-commands) the specified command, **waits** for the command’s exit status, and makes that exit status **available** for further inspection or processing.
 
 ### 1.1 Operation
 Basically, _minish_ does the following:
@@ -67,7 +67,7 @@ _Minish_ scans the results of variable expansion that did not occur within doubl
 
 _Minish_ treats each character of `<space>` or `<tab>` as a delimiter, and splits the results of the variable expansion into words using these characters as field terminators. Sequences of `<space>` and `<tab>` at the beginning and end of the results of the variable expansion are ignored.
 
-Explicit null arguments ("" or '') are retained and passed to commands as empty strings. <u>Unquoted implicit null arguments, resulting from the expansion of variables that have no values, are removed.</u> If a variable with no value is expanded within double quotes, a null argument results and is retained and passed to a command as an empty string. When a quoted null argument appears as part of a word whose expansion is non-null, the null argument is removed. That is, the word -d'' becomes -d after word splitting and null argument removal.
+Explicit null arguments ("" or '') are retained and passed to commands as empty strings. **Unquoted implicit null arguments, resulting from the expansion of variables that have no values, are removed.** If a variable with no value is expanded within double quotes, a null argument results and is retained and passed to a command as an empty string. When a quoted null argument appears as part of a word whose expansion is non-null, the null argument is removed. That is, the word -d'' becomes -d after word splitting and null argument removal.
 
 Note that <u>if no expansion occurs, no splitting is performed</u>.
 
@@ -109,7 +109,7 @@ delimiter
 This type of redirection instructs _minish_ to read input from the current source until a line containing only _delimeter_ (with no trailing spaces or tabs) is seen. All of the lines read up to that point are then used as the standard input for a command.
 
 > [!WARNING]  
-> <u>No variable expansion is performed on word.</u> If any part of _word_ is quoted, the _delimiter_ is the result of quote removal on _word_, and the lines in the _here_document_ are not expanded. If _word_ is unquoted, all lines of the _here_document_ are subjected to variable expansion.
+> **No variable expansion is performed on word.** If any part of _word_ is quoted, the _delimiter_ is the result of quote removal on _word_, and the lines in the _here_document_ are not expanded. If _word_ is unquoted, all lines of the _here_document_ are subjected to variable expansion.
 
 ## 6. Executing Commands
 ### 6.1 Command Expansion
