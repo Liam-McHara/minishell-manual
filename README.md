@@ -1,12 +1,13 @@
-# minish-manual
-A bare-minimum manual for the <ins>minishell</ins> 42 project.
+![minish title](assets/minish_title.png)
 
-this is a [link](#1-title-one) to section one. 
+This is the manual for the 42 Common Core `minishell` project.
 
-## Title two
-![minish diagram](assets/diagram.png)
+> [!NOTE]  
+> This manual is the <ins>our interpretation</ins> of the subject.
+
+\>> [READ THE MANUAL](manual.md) <<
 
 
 
-## 1. Title one
-Lorem ipsum.
+![disclaimer](assets/disclaimer.png)
+
