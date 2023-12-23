@@ -1,5 +1,4 @@
 # The minish manual
-![minish diagram](https://github.com/Liam-McHara/minishell-manual/blob/main/assets/diagram.png?raw=true)
 
 ## 1. Syntax
 When _minish_ reads its input, it divides the input into words and operators, employing the quoting rules to select which meanings to assign various words and characters.
@@ -7,6 +6,9 @@ When _minish_ reads its input, it divides the input into words and operators, em
 Minish then parses these tokens into commands and other constructs, removes the special meaning of certain words or characters, expands others, redirects input and output as needed, executes the specified command, waits for the command’s exit status, and makes that exit status available for further inspection or processing.
 
 ### 1.1 Operation
+
+![minish diagram](https://github.com/Liam-McHara/minishell-manual/blob/main/assets/diagram.png?raw=true)
+
 Basically, _minish_ does the following:
 
 1. Reads its input from the user’s terminal.

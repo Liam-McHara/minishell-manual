@@ -1,8 +1,10 @@
-![minish title](assets/minish_title.png)
-
-This is the manual for the 42 Common Core [minishell](https://cdn.intra.42.fr/pdf/pdf/114775/en.subject.pdf) project.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_title_dark.png?raw=true">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_title_light.png?raw=true">
+  <img alt="minish title" src="https://github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_title_dark.png?raw=true">
+</picture>
  
-> This manual is the <ins>our interpretation</ins> of the subject.
+> This manual is just <ins>our interpretation</ins> of [the subject](https://cdn.intra.42.fr/pdf/pdf/114775/en.subject.pdf). 
 
 ## 👉 [THE MANUAL](manual.md) 👈
 
