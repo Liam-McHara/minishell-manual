@@ -188,7 +188,7 @@ Minish ignores `SIGTERM`.
 > [!NOTE]  
 > Expansion errors, redirection errors, a special builtin returning an error status and parser syntax errors will not cause the shell to exit.
 
-![minish loop](https:/github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_loop.png)
+![minish loop](https:/github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_loop.png?raw=true)
 
 ## History
 A working history allows to retrieve and execute previously executed commands, by browsing them using the up-arrow and down-arrow keys.
