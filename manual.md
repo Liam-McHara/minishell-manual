@@ -11,20 +11,20 @@ Minish then parses these tokens into commands and other constructs, removes the 
 Basically, _minish_ does the following:
 
 1. Reads its input from the user’s terminal.
-2. Breaks the input into words and operators, obeying the quoting rules described in [Quoting](#12-quoting). These tokens are separated by [metacharacters](#definitions).
+2. Breaks the input into _words_[^word] and operators, obeying the quoting rules described in [Quoting](#12-quoting). These _tokens_[^token] are separated by _metacharacters_[^meta].
 3. Parses the tokens into [commands](#2-commands).
 4. Performs the various [expansions](#4-expansion-and-quote-removal), breaking the expanded tokens.
-5. Performs any necessary [redirections](#5-redirections) and removes the redirection operators and their operands from the argument list.
+5. Performs any necessary [redirections](#5-redirections) and removes the _redirection operators_[^redir] and their operands from the argument list.
 6. [Executes](#6-executing-commands) the command.
 7. Optionally waits for the command to complete and collects its [exit status](#65-exit-status).
 
 ### 1.2 Quoting
 Quoting is used to remove the special meaning of certain characters or words to _minish_. Quoting can be used to disable special treatment for special characters and to prevent variable expansion.
 
-Each of the shell [metacharacters](#definitions) has special meaning to _minish_ and must be quoted if it is to represent itself.
+Each of the shell _metacharacters_ has special meaning to _minish_ and must be quoted if it is to represent itself.
 
 ## 2. Commands
-A command is just a sequence of `word`s separated by `metacharacters`, terminated by a `pipe` or a newline. The first word generally specifies a command to be executed, with the rest of the `word`s being that command’s arguments.
+A command is just a sequence of _word_s[^word] separated by _metacharacters_[^meta], terminated by a `pipe` or a newline. The first word generally specifies a command to be executed, with the rest of the `word`s being that command’s arguments.
 The command to be executed can be an executable filename or a builtin name.
 The return status of a command is its [exit status](#65-exit-status) as provided by the POSIX 1003.1 waitpid function, or 128+n if the command was terminated by signal n.
 
@@ -122,8 +122,18 @@ This type of redirection instructs _minish_ to read input from the current sourc
 
 ## The minish Loop
 
-## Definitions
+## History
 
-### History
+## Builtins
 
-### Builtins
+[^token]: **token**: A sequence of characters treated as a unit by the shell. Both operators and words are tokens.
+
+[^pipe]: **pipe**: A token that separates one command from the next, connecting the output of the former to the output of the latter. It is ‘|’.
+
+[^redir]: **redirection operator**: A token that performs a redirection function. It is ‘<’, ‘>’, ‘<<’ or ‘>>’.
+
+[^word]: **word**: A sequence of characters treated as a unit by the shell (excluding operators). Words may not include unquoted metacharacters.
+
+[^meta]: **metacharacter**: A character that, when unquoted, separates words. A metacharacter is a space, tab or one of the following characters: ‘|’, ‘<’, or ‘>’.
+
+[^name]: **name**: A word consisting only of alphanumeric characters and underscores, and beginning with an alphabetic character or an underscore. Names are used as shell variable names.
