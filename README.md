@@ -4,9 +4,9 @@ This is the manual for the 42 Common Core [minishell](https://cdn.intra.42.fr/pd
  
 > This manual is the <ins>our interpretation</ins> of the subject.
 
-## 👉 [READ THE MANUAL](manual.md) 👈
+## 👉 [THE MANUAL](manual.md) 👈
 
-🧑‍💻 [The code](https://github.com/LAG-jara/minishell) 👀
+### 🧑‍💻 [The code](https://github.com/LAG-jara/minishell) 👀
 
 ![disclaimer](assets/disclaimer.png)
 
