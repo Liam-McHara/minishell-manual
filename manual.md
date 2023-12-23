@@ -1,4 +1,4 @@
-## The minish loop
+# The minish manual
 ![minish diagram](https://github.com/Liam-McHara/minishell-manual/blob/main/assets/diagram.png?raw=true)
 
 ## 1. Syntax
