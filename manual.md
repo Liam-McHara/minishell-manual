@@ -1,5 +1,5 @@
 ## The minish loop
-![minish diagram](assets/diagram.png)
+![minish diagram](https://github.com/Liam-McHara/minishell-manual/blob/main/assets/diagram.png?raw=true)
 
 ## 1. Syntax
 When _minish_ reads its input, it divides the input into words and operators, employing the quoting rules to select which meanings to assign various words and characters.
@@ -128,27 +128,96 @@ If there is a command name left after expansion, execution proceeds as described
 After a command has been split into _words_[^word], if it results in a command and an optional list of arguments, the following actions are taken.
 1. _minish_ searches for it in the list of shell builtins. If a match is found, that builtin is invoked.
 2. If the name is not a builtin, and contains no slashes, _minish_ searches each element of `$PATH` for a directory containing an executable file by that name. If the search is unsuccessful, the shell prints an error message and returns an exit status of 127.
-3. If the search is successful, or if the command name contains one or more slashes, the shell executes the named program in a separate execution environment. Argument 0 is set to the name given, and the remaining arguments to the command are set to the arguments supplied, if any.
+3. If the search is successful, or if the command name contains one or more slashes, the shell executes the named program in a separate _execution environment_. Argument 0 is set to the name given, and the remaining arguments to the command are set to the arguments supplied, if any.
 4. _minish_ waits for the command to complete and collects its exit status.
 
 ### 6.3 Command Execution Environment
-[TODO]
+The shell has an _execution environment_, which consists of the following:
+- Open files inherited by the shell at invocation.
+- The current working directory as set by `cd` or inherited by the shell at invocation.
+- Shell variables that are inherited from the shell’s parent in the environment and the ones set by the `export` builtin.
+
+When a command other than a builtin is to be executed, it is invoked in a separate execution environment that consists of the following:
+- The shell’s open files, plus any modifications specified by redirections to the command.
+- The current working directory.
+- The shell environment variables.
+
+A command invoked in this separate environment cannot affect the shell’s execution environment.
+
+A _subshell_ is a copy of the shell process.
+
+Builtin commands that are invoked as part of a pipeline are also executed in a subshell environment. Changes made to the subshell environment cannot affect the shell’s execution environment.
+
 
 ### 6.4 Environment
-[TODO]
+When a program is invoked it is given an array of strings called the _environment_. This is a list of name-value pairs, of the form `name=value`.
+
+_minish_ provides several ways to manipulate the environment. On invocation, the shell scans its own environment getting its variables. Executed commands inherit the environment. The `export` commands allow variables to be added from the environment. If the value of a variable in the environment is modified, the new value becomes part of the environment, replacing the old. The environment inherited by any executed command consists of the shell’s initial environment, whose values may be modified in the shell, less any pairs removed by the `unset` commands, plus any additions via the `export` commands.
+
+> [!NOTE]  
+> It’s important to note that ONLY if the command line contains a single command (no pipes) and that command is a builtin, it’s redirections and execution will take place in the current shell environment (not in a subshell), thus affecting its environment.
+
 ### 6.5 Exit Status
-[TODO]
+The exit status of an executed command is the value returned by the `waitpid` system call or equivalent function. Exit statuses fall between 0 and 255. Exit statuses from shell builtins and compound commands are also limited to this range. Under certain circumstances, the shell will use special values to indicate specific failure modes.
+
+For the shell’s purposes, a command which exits with a zero exit status has succeeded. A non-zero exit status indicates failure. This seemingly counterintuitive scheme is used so there is one well-defined way to indicate success and a variety of ways to indicate various failure modes. When a command terminates on a fatal signal whose number is N, _minish_ uses the value 128+N as the exit status.
+
+If a command is not found, the child process created to execute it returns a status of 127. If a command is found but is not executable, the return status is 126.
+
+If a command fails because of redirection, the exit status is greater than zero.
+
+All of the _minish_ builtins return an exit status of zero if they succeed and a non-zero status on failure. All builtins return an exit status of 2 to indicate incorrect usage, generally invalid options or missing arguments.
+
+The exit status of the last command is available in the special variable `$?`.
+
 ### 6.6 Signals
-[TODO]
+_minish_ ignores `SIGTERM` (so that `kill 0` does not kill the shell), and `SIGINT` is caught and handled. When _minish_ receives a `SIGINT`, it breaks out of any executing loops. In all cases, _minish_ ignores `SIGQUIT`.
+Non-builtin commands started by _minish_ have signal handlers set to the values inherited by the shell from its parent.
+_minish_ exits by default upon receipt of a `SIGHUP`. Before exiting, an interactive shell resends the `SIGHUP` to all jobs, running or stopped.
+When _minish_ is waiting for a foreground command to complete, the shell receives keyboard-generated signals such as `SIGINT` (usually generated by `^C`) that users commonly intend to send to that command. This happens because the shell and the command are in the same process group as the terminal, and `^C` sends `SIGINT` to all processes in that process group. 
 
 ## The minish Loop
-[TODO]
-![minish loop](assets/minish_loop.png)
+When the shell is running, it loops infinitely through the following stages:
+1. _minish_ displays the prompt `minish$` before reading each command line.
+2. Readline is used to read commands from the user’s terminal.
+3. The command line is interpreted (tokenized, parsed, expanded, quotes removed).
+4. The command line is redirected and executed.
+
+Minish ignores `SIGTERM`.
+
+> [!NOTE]  
+> Expansion errors, redirection errors, a special builtin returning an error status and parser syntax errors will not cause the shell to exit.
+
+![minish loop](https:/github.com/Liam-McHara/minishell-manual/blob/main/assets/minish_loop.png)
 
 ## History
-[TODO]
+A working history allows to retrieve and execute previously executed commands, by browsing them using the up-arrow and down-arrow keys.
+
 ## Builtins
-[TODO]
+`echo [-n] [arg ...]`
+> Output the args, separated by spaces, followed by a newline. The return status is always 0. If `-n` is specified, the trailing newline is suppressed.
+
+`cd [dir]`
+> Change the current directory to dir. The variable HOME is the default dir. The variable `CDPATH` defines the search path for the directory containing dir. Alternative directory names in `CDPATH` are separated by a colon (:). A null directory name in `CDPATH` is the same as the current directory, i.e., ''.''. If dir begins with a slash (/), then `CDPATH` is not used. If a non-empty directory name from `CDPATH` is used and the directory change is successful, the absolute pathname of the new working directory is written to the standard output. The return value is true if the directory was successfully changed; false otherwise.
+
+`pwd`
+> Print the absolute pathname of the current working directory. The return status is 0 unless an error occurs while reading the name of the current directory or an invalid option is supplied.
+
+`export name=value ...`
+> The value of the environment variable name is set to value. If the environment variable name doesn’t exist it is created. If no value is given, the value will be set to "". export returns an exit status of 0 unless one of the names is not a valid shell variable name.
+The text after the '=' undergoes variable expansion and quote removal before being assigned to the variable.
+
+`unset [name ...]`
+> For each name, remove the corresponding variable. Each name refers to a shell variable. Read-only variables may not be unset. Each unset variable is removed from the environment passed to subsequent commands. The exit status is true unless a name is readonly.
+
+`env`
+> Prints the current environment.
+
+`exit [N]`
+> Prints "exit" followed by a newline before closing the shell returning the exit status N. If N is not defined, the exit status is that of the last command executed. The "exit" word is not printed if the output has been redirected or piped.
+
+
+
 
 [^token]: <ins>**token**</ins>: A sequence of characters treated as a unit by the shell. Both operators and words are tokens.
 
