@@ -216,7 +216,8 @@ The text after the '=' undergoes variable expansion and quote removal before bei
 `exit [N]`
 > Prints "exit" followed by a newline before closing the shell returning the exit status N. If N is not defined, the exit status is that of the last command executed. The "exit" word is not printed if the output has been redirected or piped.
 
-
+> [!NOTE]  
+> Builtins return 0 if successful, and non-zero if an error occurs while they execute.
 
 
 [^token]: <ins>**token**</ins>: A sequence of characters treated as a unit by the shell. Both operators and words are tokens.
