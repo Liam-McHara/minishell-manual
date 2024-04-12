@@ -201,27 +201,27 @@ Minish ignores `SIGTERM`.
 A working history allows to retrieve and execute previously executed commands, by browsing them using the up-arrow and down-arrow keys.
 
 ## Builtins
-`echo [-n] [arg ...]`
-> Output the args, separated by spaces, followed by a newline. The return status is always 0. If `-n` is specified, the trailing newline is suppressed.
+### `echo [-n] [arg ...]`
+Output the args, separated by spaces, followed by a newline. The return status is always 0. If `-n` is specified, the trailing newline is suppressed.
 
-`cd [dir]`
-> Change the current directory to dir. The variable HOME is the default dir. The variable `CDPATH` defines the search path for the directory containing dir. Alternative directory names in `CDPATH` are separated by a colon (:). A null directory name in `CDPATH` is the same as the current directory, i.e., ''.''. If dir begins with a slash (/), then `CDPATH` is not used. If a non-empty directory name from `CDPATH` is used and the directory change is successful, the absolute pathname of the new working directory is written to the standard output. The return value is true if the directory was successfully changed; false otherwise.
+### `cd [dir]`
+Change the current directory to dir. The variable HOME is the default dir. The variable `CDPATH` defines the search path for the directory containing dir. Alternative directory names in `CDPATH` are separated by a colon (:). A null directory name in `CDPATH` is the same as the current directory, i.e., ''.''. If dir begins with a slash (/), then `CDPATH` is not used. If a non-empty directory name from `CDPATH` is used and the directory change is successful, the absolute pathname of the new working directory is written to the standard output. The return value is true if the directory was successfully changed; false otherwise.
 
-`pwd`
-> Print the absolute pathname of the current working directory. The return status is 0 unless an error occurs while reading the name of the current directory or an invalid option is supplied.
+### `pwd`
+Print the absolute pathname of the current working directory. The return status is 0 unless an error occurs while reading the name of the current directory or an invalid option is supplied.
 
-`export name=value ...`
-> The value of the environment variable name is set to value. If the environment variable name doesn’t exist it is created. If no value is given, the value will be set to "". export returns an exit status of 0 unless one of the names is not a valid shell variable name.
+### `export name=value ...`
+The value of the environment variable name is set to value. If the environment variable name doesn’t exist it is created. If no value is given, the value will be set to "". export returns an exit status of 0 unless one of the names is not a valid shell variable name.
 The text after the '=' undergoes variable expansion and quote removal before being assigned to the variable.
 
-`unset [name ...]`
-> For each name, remove the corresponding variable. Each name refers to a shell variable. Read-only variables may not be unset. Each unset variable is removed from the environment passed to subsequent commands. The exit status is true unless a name is readonly.
+### `unset [name ...]`
+For each name, remove the corresponding variable. Each name refers to a shell variable. Read-only variables may not be unset. Each unset variable is removed from the environment passed to subsequent commands. The exit status is true unless a name is readonly.
 
-`env`
-> Prints the current environment.
+### `env`
+Prints the current environment.
 
-`exit [N]`
-> Prints `exit` followed by a newline before closing the shell returning the exit status N. If N is not defined, the exit status is that of the last command executed. The `exit` word is not printed if the output has been redirected or piped.
+### `exit [N]`
+Prints `exit` followed by a newline before closing the shell returning the exit status N. If N is not defined, the exit status is that of the last command executed. The `exit` word is not printed if the output has been redirected or piped.
 
 > [!NOTE]  
 > Builtins return 0 if successful, and non-zero if an error occurs while they execute.
